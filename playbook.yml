@@ -1,0 +1,26 @@
+---
+- name: Assignment 
+  become_method: sudo
+  hosts: container
+  
+  vars:
+    ansible_ssh_user: 'ssluser'
+    ansible_ssh_private_key_file: ./ssh_key
+    ansible_become_password: 'eee'
+    host_key_checking: no
+
+  tasks:
+    - name: Ensure git
+      ansible.builtin.package:
+        name: git
+        state: present
+      become: yes
+
+    - name: Get uptime
+      ansible.builtin.command: uptime -p
+      register: uptime_result
+
+    - name: Print uptime
+      ansible.builtin.debug:
+        msg: "{{ uptime_result.stdout }}"
+
