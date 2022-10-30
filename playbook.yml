@@ -1,6 +1,7 @@
 ---
 - name: Assignment 
   hosts: container
+  connection: paramiko
   become_method: sudo
   
   vars:
